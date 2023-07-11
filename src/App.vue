@@ -1,20 +1,17 @@
 <template>
     <div class="app">
-        <form>
-            <h3>Сreating a post</h3>
-            <input v-bind:value="title" @input="title = $event.target.value" class="input" type="text" placeholder="Name">
-            <input v-bind:value="body"  @input="body = $event.target.value" class="input" type="text" placeholder="Description">
-            <button class="btn" @click="createPost">Create</button>
-        </form>
-        <div class="post" v-for="post in posts">
-    <div><strong>Post title:</strong> {{post.title}}</div>
-    <div><strong>Description:</strong> {{post.body}}</div>
-</div>
+       <post-form @create="createPost"></post-form>
+       <post-list :posts="posts"></post-list>
     </div>
 
 </template>
 <script>
+import PostForm from "@/components/PostForm"
+import PostList from "@/components/PostList"
 export default{
+    components: {
+        PostForm, PostList,
+    },
     data(){
         return{
             posts: [
@@ -22,14 +19,12 @@ export default{
                 {id:2, title:'JavaScript2', body:'Description2'},
                 {id:3, title:'JavaScript3', body:'Description3'},
             ],
-            title:'',
-            body:'',
         }
         
     },
     methods:{
-        createPost(){
-
+        createPost(post){
+            this.posts.push(post)
         },
     }
 }
@@ -42,29 +37,5 @@ export default{
 }
 .app{
     padding: 20px;
-}
-.post{
-    padding: 15px;
-    margin: 15px;
-    border: 2px solid rgb(0, 92, 128);
-}
-form{
-    display: flex;
-    flex-direction: column;
-}
-.input{
-    margin-top: 15px;
-    padding: 15px;
-    width: 99%;
-    border:2px solid rgb(0, 92, 128);
-}
-.btn{
-    margin-top: 15px;
-    margin-right: 15px;
-    align-self: flex-end;
-    padding: 10px 15px;
-    background: none;
-    color:  rgb(0, 92, 128);
-    border: 1px solid rgb(0, 92, 128);;
 }
 </style>
