@@ -20,11 +20,7 @@ components:{PostItem},
 </script>
 
 <style>
-.post{
-    padding: 15px;
-    margin: 15px;
-    border: 2px solid rgb(0, 92, 128);
-}
+
 .pl{
     display: inline;
     margin-left: 15px;
