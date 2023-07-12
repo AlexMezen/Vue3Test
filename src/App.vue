@@ -1,6 +1,10 @@
 <template>
     <div class="app">
-       <post-form @create="createPost"></post-form>
+        <h1 class="pwp">Page with posts</h1>
+      <div class="mtb"><post-button @click="showDialog">Create a post</post-button></div>  
+        <dialog-post v-model:show="dialogVisible">
+        <post-form @create="createPost"></post-form>
+        </dialog-post>
        <post-list :posts="posts" @remove="removePost"></post-list>
        
     </div>
@@ -9,9 +13,11 @@
 <script>
 import PostForm from "@/components/PostForm"
 import PostList from "@/components/PostList"
+import DialogPost from "./components/DialogPost.vue"
+import PostButton from "./components/PostButton.vue"
 export default{
     components: {
-        PostForm, PostList,
+        PostForm, PostList, DialogPost, PostButton,
     },
     data(){
         return{
@@ -20,16 +26,21 @@ export default{
                 {id:2, title:'JavaScript2', body:'Description2'},
                 {id:3, title:'JavaScript3', body:'Description3'},
             ],
+            dialogVisible: false
         }
         
     },
     methods:{
         createPost(post){
             this.posts.push(post)
+            this.dialogVisible = false;
         },
         removePost(post){
             console.log(post.id);
             this.posts = this.posts.filter(p => p.id !== post.id)
+        },
+        showDialog(){
+            this.dialogVisible = true;
         }
     }
 }
@@ -42,5 +53,14 @@ export default{
 }
 .app{
     padding: 20px;
+}
+.mtb{
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-left: 15px;
+}
+.pwp{
+    margin-left: 15px;
 }
 </style>
