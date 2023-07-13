@@ -32,8 +32,9 @@ components:{PostItem},
     margin-left: 15px;
 }
 .ple{
-    display: inline;
+    display: flex;
     margin-left: 15px;
     color:red
+    
 }
 </style>
