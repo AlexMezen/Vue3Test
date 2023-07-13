@@ -10,7 +10,7 @@ export default{
 }
 </script>
 
-<style>
+<style scoped>
 .btn{
     margin-top: 15px;
     margin-right: 15px;

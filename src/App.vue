@@ -2,6 +2,7 @@
     <div class="app">
         <h1 class="pwp">Page with posts</h1>
       <div class="mtb"><post-button @click="showDialog">Create a post</post-button></div>  
+      <div class="mtb"><post-select v-model="selectedSort" :options="sortOptions"></post-select></div>
         <dialog-post v-model:show="dialogVisible">
         <post-form @create="createPost"></post-form>
         </dialog-post>
@@ -16,16 +17,23 @@ import PostForm from "@/components/PostForm"
 import PostList from "@/components/PostList"
 import DialogPost from "./components/DialogPost.vue"
 import PostButton from "./components/PostButton.vue"
+import PostSelect from "./components/PostSelect.vue"
 import axios from "axios"
 export default{
     components: {
-        PostForm, PostList, DialogPost, PostButton,
+        PostForm, PostList, DialogPost, PostButton, PostSelect,
     },
     data(){
         return{
             posts: [],
             dialogVisible: false,
             postsLoading: false,
+            selectedSort: '',
+            selectedSort: '',
+            sortOptions:[
+                {value: 'title', name: 'By name'},
+                {value: 'body', name: 'By content'}
+            ] 
         }
         
     },
@@ -68,7 +76,7 @@ export default{
     padding: 20px;
 }
 .mtb{
-    display: inline-block;
+    display: inline-block;   
     margin-top: 10px;
     margin-bottom: 20px;
     margin-left: 15px;

@@ -25,7 +25,7 @@ export default{
 }
 </script>
 
-<style>
+<style scoped>
 .post{
     padding: 15px;
     margin: 15px;

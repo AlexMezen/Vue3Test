@@ -36,16 +36,10 @@ export default{
 }
 </script>
 
-<style>
+<style scoped>
 form{
     display: flex;
     flex-direction: column;
-}
-.input{
-    margin-top: 15px;
-    padding: 15px;
-    width: 99%;
-    border:2px solid rgb(0, 92, 128);
 }
 
 </style>

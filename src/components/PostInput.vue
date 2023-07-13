@@ -15,7 +15,7 @@ methods:{
 }
 </script>
 
-<style>
+<style scoped>
 .input{
     margin-top: 15px;
     padding: 15px;
