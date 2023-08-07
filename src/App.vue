@@ -1,12 +1,13 @@
 <template>
     <div class="app">
         <h1 class="pwp">Page with posts</h1>
+        <div class="inpcl"><post-input v-model="searchQuery" placeholder="Search..."/></div>
       <div class="mtb"><post-button @click="showDialog">Create a post</post-button></div>  
       <div class="mtb"><post-select v-model="selectedSort" :options="sortOptions"></post-select></div>
         <dialog-post v-model:show="dialogVisible">
         <post-form @create="createPost"></post-form>
         </dialog-post>
-       <post-list :posts="sortedPosts" @remove="removePost" v-if="!postsLoading"></post-list>
+       <post-list :posts="SortedSearchedPosts" @remove="removePost" v-if="!postsLoading"></post-list>
        <h3 v-else>Loading...</h3>
        
     </div>
@@ -18,10 +19,11 @@ import PostList from "@/components/PostList"
 import DialogPost from "./components/DialogPost.vue"
 import PostButton from "./components/PostButton.vue"
 import PostSelect from "./components/PostSelect.vue"
+import PostInput from "./components/PostInput.vue"
 import axios from "axios"
 export default{
     components: {
-        PostForm, PostList, DialogPost, PostButton, PostSelect,
+        PostForm, PostList, DialogPost, PostButton, PostSelect, PostInput,
     },
     data(){
         return{
@@ -29,6 +31,7 @@ export default{
             dialogVisible: false,
             postsLoading: false,
             selectedSort: '',
+            searchQuery: '',
             sortOptions:[
                 {value: 'title', name: 'By name'},
                 {value: 'body', name: 'By content'}
@@ -66,8 +69,12 @@ export default{
     computed: {
         sortedPosts(){
             return [...this.posts].sort((post1,post2)=>post1[this.selectedSort]?.localeCompare(post2[this.selectedSort]))
-        }
+        },
+        SortedSearchedPosts(){
+        return this.sortedPosts.filter(post => post.title.toLowerCase().includes(this.searchQuery))
     }
+    },
+   
 }
 </script>
 <style>
@@ -87,5 +94,8 @@ export default{
 }
 .pwp{
     margin-left: 15px;
+}
+.inpcl{
+    width: 20%;
 }
 </style>
