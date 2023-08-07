@@ -1,5 +1,5 @@
 <template>
-<button class="btn">
+<button class="btn hov">
     <slot></slot>
 </button>
 </template>
@@ -19,6 +19,13 @@ export default{
     color:  rgb(0, 92, 128);
     border: 1px solid rgb(0, 92, 128);
     align-self: flex-end;
-    
+    cursor: pointer;
 }
+.hov:hover{
+    color: black;
+    border: 2px solid teal;
+    font-weight: bolder;
+
+}
+
 </style>
