@@ -1,12 +1,12 @@
 <template>
-<button class="btn hov">
+<button class="btn"
+   >
     <slot></slot>
 </button>
 </template>
 
 <script>
 export default{
-
 }
 </script>
 
@@ -21,11 +21,11 @@ export default{
     align-self: flex-end;
     cursor: pointer;
 }
-.hov:hover{
-    color: black;
-    border: 2px solid teal;
-    font-weight: bolder;
-
+.btn:hover {
+  background-color: teal;
+  transition: background-color 0.5s;
+  color: aliceblue;
+  border-radius: 10px;
+  transition: border-radius 0.5s;
 }
-
 </style>
