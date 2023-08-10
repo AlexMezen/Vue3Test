@@ -24,7 +24,7 @@ export default{
 .btn:hover {
   background-color: teal;
   color: aliceblue;
-  border-radius: 10px;
+  border-radius: 5px;
   transition: border-radius 0.5s;
 }
 .btn:active{
