@@ -41,14 +41,14 @@ components:{PostItem},
 }
 .post-list-enter-active,
 .post-list-leave-active {
-  transition: opacity 0.3s ease;
+  transition: opacity 0.2s ease;
 }
 
 .post-list-enter-from,
 .post-list-leave-to {
-  opacity: 0;
+  opacity: 0.5;
 }
 .post-list-move{
-    transition: transform 0.5s ease-out
+    transition: transform 0.3s ease
 }
 </style>

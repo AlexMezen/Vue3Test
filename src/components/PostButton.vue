@@ -23,9 +23,12 @@ export default{
 }
 .btn:hover {
   background-color: teal;
-  transition: background-color 0.5s;
   color: aliceblue;
   border-radius: 10px;
   transition: border-radius 0.5s;
 }
+.btn:active{
+  background-color: rgba(7, 150, 102, 0.636);
+}
+
 </style>
