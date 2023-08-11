@@ -6,7 +6,7 @@
          v-for="post in posts" 
         :post="post" 
         :key="post.id"
-        @edit="$emit('edit', post)"
+        @edit="handleEdit"
         @remove="$emit('remove', post)">
     </post-item>
 </TransitionGroup>
@@ -24,6 +24,11 @@ components:{PostItem},
         posts:{
             type: Array,
             required: true,
+        }
+    },
+    methods:{
+        handleEdit(editedPost){
+            this.$emit('edit', editedPost)
         }
     }
 }

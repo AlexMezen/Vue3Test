@@ -52,9 +52,13 @@ export default{
             this.posts = this.posts.filter(p => p.id !== post.id)
         },
         editPost(editedPost) {
+            console.log(editedPost)
+
       const index = this.posts.findIndex(post => post.id === editedPost.id);
       if (index !== -1) {
-        this.posts[index] = editedPost;
+        const updatedPosts = [...this.posts];
+        updatedPosts[index] = editedPost;
+        this.posts = updatedPosts;
       }
     },
     

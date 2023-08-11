@@ -53,11 +53,9 @@ export default{
         <input v-model="editedTitle" placeholder="Title">
         <textarea v-model="editedBody" placeholder="Description"></textarea>
       </div>
-      <div class="btn-container">
         <div class="pst-btns">
         <post-button @click="toggleEditMode">{{ editing ? 'Save' : 'Edit' }}</post-button>
-        <post-button @click="$emit('remove', post)">Delete</post-button>
-      </div>
+        <post-button @click="$emit('remove')">Delete</post-button>
       </div>
     </div>
   </template>
@@ -85,7 +83,6 @@ export default{
     methods: {
       toggleEditMode() {
         if (this.editing) {
-          // Сохранение изменений и отправка события
           this.$emit('edit', {
             ...this.post,
             title: this.editedTitle,
@@ -122,19 +119,12 @@ export default{
 }
 
 .pst-btns {
-    flex-wrap: 0;
+    display: flex;
+    flex-wrap: nowrap;
 }
-
-.btn-container {
-  display: flex;
-  flex-direction: column-reverse; 
-  align-items: flex-end;
-  flex-wrap: nowrap;
+.pst-btns .btn:first-of-type{
+    margin-right: 15px;
+    width: 75px;
 }
-
-.btn-container post-button {
-  margin-right: 10px;
-}
-
   </style>
   
