@@ -6,6 +6,7 @@
          v-for="post in posts" 
         :post="post" 
         :key="post.id"
+        @edit="$emit('edit', post)"
         @remove="$emit('remove', post)">
     </post-item>
 </TransitionGroup>
@@ -29,7 +30,6 @@ components:{PostItem},
 </script>
 
 <style>
-
 .pl{
     display: inline;
     margin-left: 15px;
@@ -41,14 +41,14 @@ components:{PostItem},
 }
 .post-list-enter-active,
 .post-list-leave-active {
-  transition: opacity 0.2s ease;
+  transition: opacity 0.4s ease;
 }
 
 .post-list-enter-from,
 .post-list-leave-to {
-  opacity: 0.5;
+  opacity: 0;
 }
 .post-list-move{
-    transition: transform 0.3s ease
+    transition: transform 0.4s ease
 }
 </style>

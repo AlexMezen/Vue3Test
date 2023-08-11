@@ -33,6 +33,8 @@ margin-left: auto;
 .main-img{
     height: 90px;
     width: 100px;
+    transition-duration: 0.5s;
+
     
 }
 .wrap{
@@ -40,6 +42,7 @@ margin-left: auto;
     border: 1px solid black;
     height: 89px;
     width: 99px;
+
 }
 
 .main-img:hover{

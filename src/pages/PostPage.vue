@@ -1,13 +1,13 @@
 <template>
     <div>
         <h1 class="pwp">Page with posts</h1>
-        <div class="inpcl"><post-input v-model="searchQuery" placeholder="Search..."/></div>
+        <div class="inpcl"><post-input v-focus v-model="searchQuery" placeholder="Search..."/></div>
       <div class="mtb"><post-button @click="showDialog">Create a post</post-button></div>  
       <div class="mtb"><post-select v-model="selectedSort" :options="sortOptions"></post-select></div>
         <dialog-post v-model:show="dialogVisible">
         <post-form @create="createPost"></post-form>
         </dialog-post>
-       <post-list :posts="SortedSearchedPosts" @remove="removePost" v-if="!postsLoading"></post-list>
+       <post-list :posts="SortedSearchedPosts" @remove="removePost" @edit="editPost" v-if="!postsLoading"></post-list>
        <h3 v-else>Loading...</h3>
        <div ref ='observer' class="observer"></div>
        
@@ -49,9 +49,15 @@ export default{
             this.dialogVisible = false;
         },
         removePost(post){
-            console.log(post.id);
             this.posts = this.posts.filter(p => p.id !== post.id)
         },
+        editPost(editedPost) {
+      const index = this.posts.findIndex(post => post.id === editedPost.id);
+      if (index !== -1) {
+        this.posts[index] = editedPost;
+      }
+    },
+    
         showDialog(){
             this.dialogVisible = true;
         },
