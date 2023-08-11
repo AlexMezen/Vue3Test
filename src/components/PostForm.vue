@@ -3,7 +3,7 @@
             <h3>Сreating a post</h3>
             <PostInput v-focus v-model="post.title" class="input" type="text" placeholder="Name"/>
             <PostInput v-model="post.body" class="input" type="text" placeholder="Description"/>
-            <post-button @click="createPost">Create</post-button>
+            <post-button class="btn-inp" @click="createPost">Create</post-button>
         </form>
 </template>
 
@@ -40,6 +40,9 @@ export default{
 form{
     display: flex;
     flex-direction: column;
+}
+.btn-inp{
+    margin-top: 15px;
 }
 
 </style>

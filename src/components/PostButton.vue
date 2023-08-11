@@ -20,6 +20,10 @@ export default{
     cursor: pointer;
     transition-duration: 0.5s;
 }
+.btn:first-of-type{
+  margin-right: 15px;
+
+}
 .btn:hover {
   background-color: teal;
   color: aliceblue;

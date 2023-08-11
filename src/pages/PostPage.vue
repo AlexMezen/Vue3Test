@@ -131,6 +131,7 @@ observer.observe(this.$refs.observer)
     margin-top: 10px;
     margin-bottom: 20px;
     margin-left: 15px;
+    
 }
 .pwp{
     margin-left: 15px;

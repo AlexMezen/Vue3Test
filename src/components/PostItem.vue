@@ -50,37 +50,47 @@ export default{
         <div><strong>Description:</strong> {{ post.body }}</div>
       </div>
       <div v-else>
-        <input v-model="editedTitle" placeholder="Title">
-        <textarea v-model="editedBody" placeholder="Description"></textarea>
+        <post-input v-model="editedTitle" placeholder="Title"/>
+        <post-input v-model="editedBody" placeholder="Description"/>
       </div>
+      
         <div class="pst-btns">
+          <!-- <input  type="checkbox" id="doneCheckbox" v-model="doneCheckboxValue">
+          <label class="inp-chk" for="doneCheckbox">Done</label> -->
         <post-button @click="toggleEditMode">{{ editing ? 'Save' : 'Edit' }}</post-button>
-        <post-button @click="$emit('remove')">Delete</post-button>
+        <post-button class="btn-del" @click="$emit('remove')">Delete</post-button>
+        <post-button @click="toggleCheckmark" :class="{ 'checked': isChecked }">Done</post-button>
       </div>
     </div>
   </template>
   
   <script>
   import PostButton from './PostButton.vue';
+  import PostInput from './PostInput.vue';
   
   export default {
     components: {
-      PostButton,
+      PostButton, PostInput,
     },
     props: {
       post: {
         type: Object,
         required: true,
       },
+      
     },
     data() {
       return {
+        isChecked: false,
         editing: false,
         editedTitle: this.post.title,
         editedBody: this.post.body,
       };
     },
     methods: {
+      toggleCheckmark() {
+          this.isChecked = !this.isChecked;
+        },
       toggleEditMode() {
         if (this.editing) {
           this.$emit('edit', {
@@ -107,24 +117,37 @@ export default{
       margin-top: -15px;
       margin-right: -20px;
       width: 15%;
-  } */
+    } */
+    .btn-del{
+      margin-right: 15px;
+    }
+    .checked::after {
+      content: "\2713"; 
+      margin-right: 1px;
+      
+    }
   .post {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 15px;
   margin: 15px;
   border: 2px solid rgb(0, 92, 128);
-  font-size: 13px;
 }
 
 .pst-btns {
     display: flex;
     flex-wrap: nowrap;
+    
 }
 .pst-btns .btn:first-of-type{
     margin-right: 15px;
-    width: 75px;
+    margin-left: 10px;
+    width: 68px;
 }
+/* .inp-chk{
+  display: flex;
+  align-self: center;
+} */
   </style>
   
