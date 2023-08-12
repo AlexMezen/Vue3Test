@@ -55,8 +55,6 @@ export default{
       </div>
       
         <div class="pst-btns">
-          <!-- <input  type="checkbox" id="doneCheckbox" v-model="doneCheckboxValue">
-          <label class="inp-chk" for="doneCheckbox">Done</label> -->
         <post-button @click="toggleEditMode">{{ editing ? 'Save' : 'Edit' }}</post-button>
         <post-button class="btn-del" @click="$emit('remove')">Delete</post-button>
         <post-button @click="toggleCheckmark" :class="{ 'checked': isChecked }">Done</post-button>
@@ -123,8 +121,7 @@ export default{
     }
     .checked::after {
       content: "\2713"; 
-      margin-right: 1px;
-      
+      margin-right: 1px;      
     }
   .post {
   display: flex;
@@ -145,9 +142,6 @@ export default{
     margin-left: 10px;
     width: 68px;
 }
-/* .inp-chk{
-  display: flex;
-  align-self: center;
-} */
+
   </style>
   

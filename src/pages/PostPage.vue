@@ -22,6 +22,7 @@ import PostButton from "@/components/PostButton.vue"
 import PostSelect from "@/components/PostSelect.vue"
 import PostInput from "@/components/PostInput.vue"
 import axios from "axios"
+
 export default{
     components: {
         PostForm, PostList, DialogPost, PostButton, PostSelect, PostInput,
@@ -44,15 +45,19 @@ export default{
         
     },
     methods:{
+        
         createPost(post){
             this.posts.push(post)
             this.dialogVisible = false;
+            this.savePostsToLocalStorage();
         },
         removePost(post){
             this.posts = this.posts.filter(p => p.id !== post.id)
+            this.savePostsToLocalStorage();
+
         },
         editPost(editedPost) {
-            console.log(editedPost)
+
 
       const index = this.posts.findIndex(post => post.id === editedPost.id);
       if (index !== -1) {
@@ -60,28 +65,37 @@ export default{
         updatedPosts[index] = editedPost;
         this.posts = updatedPosts;
       }
+      this.savePostsToLocalStorage();
+
     },
     
         showDialog(){
             this.dialogVisible = true;
         },
-         async fetchPosts(){
-            try{
-                this.postsLoading = true;
-                let response = await axios.get('https://jsonplaceholder.typicode.com/posts',{
-                    params:{
-                        _page: this.page,
-                        _limit: this.limit
-                    } 
-                })
-                this.totalPages = Math.ceil(response.headers['x-total-count'] / this.limit)
-                this.posts = response.data;
-                this.postsLoading = false;
-            } 
-            catch(e){
-                alert('Error')
+        async fetchPosts() {
+      try {
+        this.postsLoading = true;
+
+        const localPosts = JSON.parse(localStorage.getItem('posts'));
+        if (localPosts) {
+          this.posts = localPosts;
+          this.postsLoading = false;
+        } else {
+          const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
+            params: {
+              _page: this.page,
+              _limit: this.limit
             }
-        },
+          });
+          this.totalPages = Math.ceil(response.headers['x-total-count'] / this.limit);
+          this.posts = response.data;
+          this.postsLoading = false;
+          this.savePostsToLocalStorage();
+        }
+      } catch (e) {
+        alert('Error');
+      }
+    },
         async loadMorePosts(){
             try{
                 this.page += 1; 
@@ -97,7 +111,10 @@ export default{
             catch(e){
                 alert('Error')
             }
-        }
+        },
+        savePostsToLocalStorage() {
+      localStorage.setItem('posts', JSON.stringify(this.posts));
+    }
     },
     mounted(){
         this.fetchPosts();
@@ -121,7 +138,12 @@ observer.observe(this.$refs.observer)
         return this.sortedPosts.filter(post => post.title.toLowerCase().includes(this.searchQuery))
     }
     },
-   
+    created() {
+    const localPosts = JSON.parse(localStorage.getItem('posts'));
+    if (localPosts) {
+      this.posts = localPosts;
+    }
+  },
 }
 </script>
 <style>
