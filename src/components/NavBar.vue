@@ -31,6 +31,7 @@ export default{
 margin-left: auto;
 }
 .main-img{
+    object-fit: cover;
     height: 90px;
     width: 100px;
     transition-duration: 0.5s;
