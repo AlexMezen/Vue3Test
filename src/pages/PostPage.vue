@@ -19,7 +19,16 @@
       @edit="editPost"
       v-if="!postsLoading"
     ></post-list>
-    <h3 v-else>Loading...</h3>
+    
+    <div>
+      <div class="loading-bar" v-if="postsLoading">
+        <div class="loading-progress"></div>
+      </div>
+    </div>
+    <div class="error-container" :style="{ display: hasError ? 'block' : 'none' }">
+        Something went wrong. Please try again.
+      </div>
+  
     <div ref="observer" class="observer"></div>
   </div>
 </template>
@@ -51,6 +60,7 @@ export default {
       page: 1,
       limit: 10,
       totalPages: 0,
+      hasError: false,
       sortOptions: [
         { value: "title", name: "By name" },
         { value: "body", name: "By content" },
@@ -76,7 +86,6 @@ export default {
       }
       // this.savePostsToLocalStorage();
     },
-    
 
     showDialog() {
       this.dialogVisible = true;
@@ -109,22 +118,28 @@ export default {
     //     alert("Error");
     //   }
     // },
-    async fetchPosts(){
-            try{
-                this.postsLoading = true;
-                let response = await axios.get('https://jsonplaceholder.typicode.com/posts',{
-                    params:{
-                        _page: this.page,
-                        _limit: this.limit
-                    } 
-                })
-                this.totalPages = Math.ceil(response.headers['x-total-count'] / this.limit)
-                this.posts = response.data;
-                this.postsLoading = false;
-            } 
-            catch(e){
-                alert('Error')
-            }},
+    async fetchPosts() {
+      try {
+        this.hasError = false;
+        this.postsLoading = true;
+        let response = await axios.get(
+          "https://jsonplaceholder.typicode.com/posts",
+          {
+            params: {
+              _page: this.page,
+              _limit: this.limit,
+            },
+          }
+        );
+        this.totalPages = Math.ceil(
+          response.headers["x-total-count"] / this.limit
+        );
+        this.posts = response.data;
+        this.postsLoading = false;
+      } catch (e) {
+        this.hasError = true; // Установить флаг ошибки при ошибке загрузки
+        this.postsLoading = false;      }
+    },
     async loadMorePosts() {
       try {
         this.page += 1;
@@ -194,7 +209,8 @@ export default {
   display: flex;
   flex-direction: row-reverse;
   align-items: flex-end;
-  margin: 15px;
+  margin-right: 20px;
+  
 }
 .pwp {
   margin-left: 15px;
@@ -207,6 +223,58 @@ export default {
   color: whitesmoke;
   background-color: darkcyan;
 }
+.loading-bar {
+  margin-top: 30px;
+  margin-left: 10px;
+  width: 99%;
+  height: 10px;
+  background-color: #ccc;
+  position: relative;
+}
+
+.loading-progress {
+  margin-right: 10px;
+  height: 100%;
+  width: 0;
+  background-color: teal;
+  position: absolute;
+  animation: loadingAnimation 2s linear infinite;
+}
+
+@keyframes loadingAnimation {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+.error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  background-color: #ffcccc;
+  color: #f00;
+  padding: 10px;
+  border: 1px solid #f00;
+  border-radius: 4px;
+  margin-top: 20px;
+  animation: fadeInUp 0.5s ease-in-out forwards;
+  margin-left: 40%;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .observer {
   height: 30px;
 }
