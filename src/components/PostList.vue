@@ -46,7 +46,7 @@ components:{PostItem},
 }
 .post-list-enter-active,
 .post-list-leave-active {
-  transition: opacity 0.4s ease;
+  transition: opacity 0.3s ease;
 }
 
 .post-list-enter-from,
@@ -54,6 +54,6 @@ components:{PostItem},
   opacity: 0;
 }
 .post-list-move{
-    transition: transform 0.4s ease
+    transition: transform 0.3s ease
 }
 </style>
