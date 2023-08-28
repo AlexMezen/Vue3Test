@@ -10,9 +10,12 @@
       <div class="mtbSelect">
         <post-select v-model="selectedSort" :options="sortOptions"></post-select>
       </div>
-      <dialog-post v-model:show="dialogVisible">
-        <post-form @create="createPost"></post-form>
-      </dialog-post>
+      <transition name="dialog">
+  <dialog-post v-model:show="dialogVisible">
+    <post-form @create="createPost"></post-form>
+  </dialog-post>
+</transition>
+
       <post-list
         :posts="SortedSearchedPosts"
         @remove="removePost"
@@ -59,7 +62,7 @@ export default {
       selectedSort: "",
       searchQuery: "",
       page: 1,
-      limit: 20,
+      limit: 5, // changed limit to 5
       totalPages: 0,
       hasError: false,
       sortOptions: [
@@ -256,7 +259,12 @@ export default {
       transform: translateY(0);
     }
   }
-  
+  .dialog-enter-active, .dialog-leave-active {
+  transition: opacity .3s ease;
+}
+.dialog-enter, .dialog-leave-to {
+  opacity: 0;
+}
   .observer {
     height: 30px;
   }
