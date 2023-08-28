@@ -34,4 +34,20 @@ export default{
 .page-enter, .page-leave-to {
   opacity: 0;
 }
+body {
+  overflow: auto;
+}
+
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: rgb(131, 202, 168);
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background-color: teal;
+  border-radius: 4px;
+}
 </style>
