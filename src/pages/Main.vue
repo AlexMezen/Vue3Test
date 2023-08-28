@@ -33,170 +33,152 @@
     </div>
   </template>
   <script>
-  import PostForm from "@/components/PostForm";
-  import PostList from "@/components/PostList";
-  import DialogPost from "@/components/DialogPost.vue";
-  import PostButton from "@/components/PostButton.vue";
-  import PostSelect from "@/components/PostSelect.vue";
-  import PostInput from "@/components/PostInput.vue";
-  import axios from "axios";
-  
-  export default {
-    components: {
-      PostForm,
-      PostList,
-      DialogPost,
-      PostButton,
-      PostSelect,
-      PostInput,
+
+import PostForm from "@/components/PostForm";
+import PostList from "@/components/PostList";
+import DialogPost from "@/components/DialogPost.vue";
+import PostButton from "@/components/PostButton.vue";
+import PostSelect from "@/components/PostSelect.vue";
+import PostInput from "@/components/PostInput.vue";
+import axios from "axios";
+
+export default {
+  components: {
+    PostForm,
+    PostList,
+    DialogPost,
+    PostButton,
+    PostSelect,
+    PostInput,
+  },
+  data() {
+    return {
+      posts: [],
+      dialogVisible: false,
+      postsLoading: false,
+      selectedSort: "",
+      searchQuery: "",
+      page: 1,
+      limit: 20,
+      totalPages: 0,
+      hasError: false,
+      sortOptions: [
+        { value: "title", name: "By name" },
+        { value: "body", name: "By content" },
+      ],
+    };
+  },
+  methods: {
+    createPost(post) {
+      this.posts.push(post);
+      this.dialogVisible = false;
+      localStorage.setItem("posts", JSON.stringify(this.posts));
     },
-    data() {
-      return {
-        posts: [],
-        dialogVisible: false,
-        postsLoading: false,
-        selectedSort: "",
-        searchQuery: "",
-        page: 1,
-        limit: 10,
-        totalPages: 0,
-        hasError: false,
-        sortOptions: [
-          { value: "title", name: "By name" },
-          { value: "body", name: "By content" },
-        ],
-      };
+    removePost(post) {
+      this.posts = this.posts.filter((p) => p.id !== post.id);
+      localStorage.setItem("posts", JSON.stringify(this.posts));
     },
-    methods: {
-      createPost(post) {
-        this.posts.push(post);
-        this.dialogVisible = false;
-        // this.savePostsToLocalStorage();
-      },
-      removePost(post) {
-        this.posts = this.posts.filter((p) => p.id !== post.id);
-        // this.savePostsToLocalStorage();
-      },
-      editPost(editedPost) {
-        const index = this.posts.findIndex((post) => post.id === editedPost.id);
-        if (index !== -1) {
-          const updatedPosts = [...this.posts];
-          updatedPosts[index] = editedPost;
-          this.posts = updatedPosts;
-        }
-        // this.savePostsToLocalStorage();
-      },
-  
-      showDialog() {
-        this.dialogVisible = true;
-      },
-      // async fetchPosts() {
-      //   try {
-      //     this.postsLoading = true;
-  
-      //     const localPosts = JSON.parse(localStorage.getItem("posts"));
-      //     if (localPosts) {
-      //       this.posts = localPosts;
-      //       this.postsLoading = false;
-      //     } else {
-      //       const response = await axios.get(
-      //         "https://jsonplaceholder.typicode.com/posts",
-      //         {
-      //           params: {
-      //             _page: this.page,
-      //             _limit: this.limit,
-      //           },
-      //         }
-      //       );
-      //       this.totalPages = Math.ceil(
-      //         response.headers["x-total-count"] / this.limit
-      //       );
-      //       this.posts = response.data;
-      //       this.postsLoading = false;
-      //     }
-      //   } catch (e) {
-      //     alert("Error");
-      //   }
-      // },
-      async fetchPosts() {
-        try {
-          this.hasError = false;
-          this.postsLoading = true;
-          let response = await axios.get(
-            "https://jsonplaceholder.typicode.com/posts",
-            {
-              params: {
-                _page: this.page,
-                _limit: this.limit,
-              },
-            }
-          );
-          this.totalPages = Math.ceil(
-            response.headers["x-total-count"] / this.limit
-          );
-          this.posts = response.data;
-          this.postsLoading = false;
-        } catch (e) {
-          this.hasError = true; // Установить флаг ошибки при ошибке загрузки
-          this.postsLoading = false;      }
-      },
-      async loadMorePosts() {
-        try {
-          this.page += 1;
-          let response = await axios.get(
-            "https://jsonplaceholder.typicode.com/posts",
-            {
-              params: {
-                _page: this.page,
-                _limit: this.limit,
-              },
-            }
-          );
-          this.totalPages = Math.ceil(
-            response.headers["x-total-count"] / this.limit
-          );
-          this.posts = [...this.posts, ...response.data];
-        } catch (e) {
-          alert("Error");
-        }
-      },
-      // savePostsToLocalStorage() {
-      //   localStorage.setItem("posts", JSON.stringify(this.posts));
-      // },
+    editPost(editedPost) {
+      const index = this.posts.findIndex((post) => post.id === editedPost.id);
+      if (index !== -1) {
+        const updatedPosts = [...this.posts];
+        updatedPosts[index] = editedPost;
+        this.posts = updatedPosts;
+        localStorage.setItem("posts", JSON.stringify(this.posts));
+      }
     },
-    mounted() {
-      this.fetchPosts();
-      const options = {
-        rootMargin: "0px",
-        threshold: 1.0,
-      };
-      const callback = (entries, observer) => {
-        if (entries[0].isIntersecting && this.page < this.totalPages) {
-          this.loadMorePosts();
-        }
-      };
-      const observer = new IntersectionObserver(callback, options);
-      observer.observe(this.$refs.observer);
+
+    showDialog() {
+      this.dialogVisible = true;
     },
-    computed: {
-      sortedPosts() {
-        return [...this.posts].sort((post1, post2) =>
-          post1[this.selectedSort]?.localeCompare(post2[this.selectedSort])
+
+    async fetchPosts() {
+      try {
+        this.hasError = false;
+        this.postsLoading = true;
+        let response = await axios.get(
+          "https://jsonplaceholder.typicode.com/posts",
+          {
+            params: {
+              _page: this.page,
+              _limit: this.limit,
+            },
+          }
         );
-      },
-      SortedSearchedPosts() {
-        return this.sortedPosts.filter((post) =>
-          post.title.toLowerCase().includes(this.searchQuery)
+        this.totalPages = Math.ceil(
+          response.headers["x-total-count"] / this.limit
         );
-      },
+        this.posts = [...this.posts, ...response.data];
+        this.removeDuplicatePosts();
+        this.postsLoading = false;
+      } catch (e) {
+        this.hasError = true;
+        this.postsLoading = false;
+      }
     },
-    // created() {
-    //   const localPosts = JSON.parse(localStorage.getItem("posts"));
-    //   if (localPosts) {
-    //     this.posts = localPosts;
-    //   }
-    // },
-  };
+    async loadMorePosts() {
+      try {
+        this.page += 1;
+        let response = await axios.get(
+          "https://jsonplaceholder.typicode.com/posts",
+          {
+            params: {
+              _page: this.page,
+              _limit: this.limit,
+            },
+          }
+        );
+        this.totalPages = Math.ceil(
+          response.headers["x-total-count"] / this.limit
+        );
+        this.posts = [...this.posts, ...response.data];
+        this.removeDuplicatePosts();
+      } catch (e) {
+        alert("Error");
+      }
+    },
+    removeDuplicatePosts() {
+      const uniqueTitles = new Set();
+      const uniquePosts = [];
+      for (const post of this.posts) {
+        if (!uniqueTitles.has(post.title)) {
+          uniqueTitles.add(post.title);
+          uniquePosts.push(post);
+        }
+      }
+      this.posts = uniquePosts;
+    },
+  },
+  mounted() {
+    if (localStorage.getItem("posts")) {
+      this.posts = JSON.parse(localStorage.getItem("posts"));
+    }
+    this.fetchPosts();
+    const options = {
+      rootMargin: "0px",
+      threshold: 1.0,
+    };
+    const callback = (entries, observer) => {
+      if (entries[0].isIntersecting && this.page < this.totalPages) {
+        this.loadMorePosts();
+      }
+    };
+    const observer = new IntersectionObserver(callback, options);
+    observer.observe(this.$refs.observer);
+  },
+  computed: {
+    sortedPosts() {
+      return [...this.posts].sort((post1, post2) =>
+        post1[this.selectedSort]?.localeCompare(post2[this.selectedSort])
+      );
+    },
+    SortedSearchedPosts() {
+      return this.sortedPosts.filter((post) =>
+        post.title.toLowerCase().includes(this.searchQuery)
+      );
+    },
+  },
+};
   </script>
   <style>
   .mtb {
