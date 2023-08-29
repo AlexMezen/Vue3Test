@@ -1,27 +1,41 @@
 import Main from "@/pages/Main";
 import {createRouter, createWebHistory} from "vue-router";
 import About from "@/pages/About"
+import Login from '@/components/Login.vue'; 
 
 
 const routes = [
     {
-        path: '/',
-        component: Main
+      path: '/login',
+      component: Login,
     },
-
     {
-        path: '/about',
-        component: About
+      path: '/',
+      component: Main,
+      meta: { requiresAuth: true }, // Добавьте это свойство
     },
-    
+    {
+      path: '/about',
+      component: About,
+      meta: { requiresAuth: true }, // Или это свойство
+    },
+  ];
 
-    
-    
-]
-
-const router = createRouter({
+  const router = createRouter({
+    history: createWebHistory(process.env.BASE_URL),
     routes,
-    history: createWebHistory(process.env.BASE_URL)
-})
-
+  });
+  
+  router.beforeEach((to, from, next) => {
+    const isLoggedIn = "kek"
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+      if (!isLoggedIn) {
+        next('/login');
+      } else {
+        next();
+      }
+    } else {
+      next();
+    }
+  });
 export default router;

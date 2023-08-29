@@ -1,19 +1,46 @@
 <template>
-    <nav-bar></nav-bar>
+  
+      <nav-bar v-if="loggedIn" @logout="logout"></nav-bar>
     <div class="app">
+      <div class="scrollable-content">
       <transition name="page" mode="out-in">
-        <router-view :key="$route.fullPath"></router-view>
+        <router-view :key="$route.fullPath" v-if="loggedIn"></router-view>
+        <login v-else @login="login"></login>
       </transition>
+    </div>
+    <scroll-to-top-button></scroll-to-top-button>
+            
     </div>
   </template>
   
 
 <script>
-import NavBar from '@/components/NavBar.vue'
+import NavBar from '@/components/NavBar.vue';
+import Login from '@/components/Login.vue';
+import ScrollToTopButton from "@/components/ScrollToTopButton.vue";
+
+
 export default{
     components:{
-        NavBar
-    }
+        NavBar,
+        Login,
+        ScrollToTopButton,
+    },
+    data() {
+    return {
+      loggedIn: false,
+    };
+  },
+  methods: {
+    login() {
+      this.loggedIn = true;
+    },
+    logout() {
+      this.loggedIn = false;
+      this.$router.push("/login");
+    },
+  },
+
 }
 
 </script>
@@ -51,4 +78,5 @@ body::-webkit-scrollbar-thumb:hover {
   background-color: teal;
   border-radius: 4px;
 }
+
 </style>
