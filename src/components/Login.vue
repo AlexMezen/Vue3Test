@@ -64,7 +64,7 @@
   .login input:focus {
     outline: none;
     border-bottom-color:  rgb(0, 255, 132);
-    transition: border-bottom-color 0.5s, background-color 0.5s;
+    transition: border-bottom-color 0.3s;
   }
   
   .login button[type=submit] {

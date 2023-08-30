@@ -18,7 +18,7 @@ export default{
     border: 1px solid rgb(0, 92, 128);
     align-self: flex-end;
     cursor: pointer;
-    transition-duration: 0.5s;
+    transition-duration: 0.3s;
 }
 .btn:first-of-type{
   margin-right: 15px;
@@ -28,7 +28,7 @@ export default{
   background-color: teal;
   color: aliceblue;
   border-radius: 5px;
-  transition: all border-radius 0.5s;
+  transition: all border-radius 0.3s;
 }
 .btn:active{
   background-color: rgba(7, 150, 102, 0.636);

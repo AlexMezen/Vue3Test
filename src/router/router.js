@@ -2,7 +2,7 @@ import Main from "@/pages/Main";
 import {createRouter, createWebHistory} from "vue-router";
 import About from "@/pages/About"
 import Login from '@/components/Login.vue'; 
-
+import Account from '@/components/Account.vue'
 
 const routes = [
     {
@@ -18,6 +18,11 @@ const routes = [
       path: '/about',
       component: About,
       meta: { requiresAuth: true }, // Или это свойство
+    },
+    {
+      path: '/account',
+      name: 'Account',
+      component: Account,
     },
   ];
 
