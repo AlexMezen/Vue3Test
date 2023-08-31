@@ -4,7 +4,11 @@
     <h3 class="aboutPage">This is a test website where there is an opportunity to interact with posts. It is built on Vue 3. 
       Additionally, there is a separate identical page with posts written using Vuex. As the page is scrolled to the end, new posts are automatically loaded.
       When the page fetches new data, a loading bar appears to indicate that the data is gradually appearing.If there is an issue while loading data, we will see an error message.
-      Axios is also utilized for requesting posts. Also, the posts are not being deleted after page reload. However, there is an exception. Posts with the same title are being deleted after page reload.If there are identical posts on the page, then posts with unique titles are loaded. If there are none, the loading doesn't trigger.</h3>
+      Axios is also utilized for requesting posts. Posts created and edited are saved on the page after reloading. Account data is also saved without the need for buttons.
+       An account page has been created where you can modify information, including photos. 
+      Additionally, a login page has been added for accessing the site.
+       The website supports both light and dark themes.
+       For convenience, a button has been added to allow users to smoothly scroll back to the top.</h3>
 <p class="aboutInteractive">
   Interactive elements on the website:
 </p>

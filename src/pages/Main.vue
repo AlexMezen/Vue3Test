@@ -125,7 +125,6 @@ export default {
           response.headers["x-total-count"] / this.limit
         );
         this.posts = [...this.posts, ...response.data];
-        // this.removeDuplicatePosts();
         this.postsLoading = false;
       } catch (e) {
         this.hasError = true;
@@ -148,22 +147,11 @@ export default {
           response.headers["x-total-count"] / this.limit
         );
         this.posts = [...this.posts, ...response.data];
-        // this.removeDuplicatePosts();
       } catch (e) {
         alert("Error");
       }
     },
-    // removeDuplicatePosts() {
-    //   const uniqueTitles = new Set();
-    //   const uniquePosts = [];
-    //   for (const post of this.posts) {
-    //     if (!uniqueTitles.has(post.title)) {
-    //       uniqueTitles.add(post.title);
-    //       uniquePosts.push(post);
-    //     }
-    //   }
-    //   this.posts = uniquePosts;
-    // },
+   
   },
   mounted() {
     if (localStorage.getItem("posts")) {
