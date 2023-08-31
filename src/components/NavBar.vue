@@ -4,15 +4,18 @@
     <div class="nav-btns">
         <post-button @click="$router.push('account')">Account</post-button>
         <post-button @click="$router.push('about')">About</post-button>
-        <div class="form-check form-switch mt-3">
-  <input
-    class="form-check-input mr"
-    type="checkbox"
-    id="darkModeSwitch"
-    @change="toggleDarkMode"
-  />
-  <label class="form-check-label" for="darkModeSwitch">Тёмный режим</label>
-</div>
+        <div class="form-check form-switch mt-3 ml">
+    <input
+    class="form-check-input"
+  :class="{ 'dark-mode': darkMode }"
+  type="checkbox"
+  id="darkModeSwitch"
+  @change="toggleDarkMode"
+    />
+    <label class="form-check-label" for="darkModeSwitch">
+      {{ darkMode ? 'Dark Mode' : 'Light Mode' }}
+    </label>
+  </div>
     </div>
 </div>
 </template>
@@ -30,11 +33,10 @@ export default {
   },
   methods: {
     toggleDarkMode() {
-      this.darkMode = !this.darkMode;
-      document.body.classList.toggle('dark-mode');
-    },
-  },
-};
+  this.darkMode = !this.darkMode;
+  document.body.classList.toggle('dark-mode');
+
+  }}}
 </script>
 
 
@@ -42,8 +44,8 @@ export default {
 .nav{
     height: 100px;
     background-color: rgb(131, 202, 168);
-    box-shadow: 2px 2px 4px gray;
-    display: flex;
+    box-shadow: 0px 2px 4px grey;
+        display: flex;
     align-items: center;
     padding: 0px 15px;
 }
@@ -82,10 +84,63 @@ margin-bottom: 0px;
   box-shadow: none !important;
 }
 body.dark-mode {
-background-color:#333
-}
-body.dark-mode *{
-color:white
+  background-color: #333;
 }
 
+body.dark-mode * {
+  color: white;
+}
+body.dark-mode .input{
+ background-color: #555454 !important;  
+ color: aliceblue;
+}
+body.dark-mode textarea,
+body.dark-mode textarea:focus
+{
+background-color:#555454;
+border-color:aquamarine;
+color: aliceblue;
+}
+body.dark-mode ::placeholder{
+color: #a7a7a7;
+}
+body.dark-mode select{
+  background-color: #555454;
+  color: aquamarine;
+}
+body.dark-mode .img-thumbnail{
+  background: #333;
+}
+body.dark-mode .post{
+border-color: aquamarine;
+}
+body.dark-mode .btn{
+border-color: aquamarine;
+color: aliceblue;
+}
+body.dark-mode .dialog-post-cont{
+  background:#333;
+}
+body.dark-mode .nav{
+  background-color: rgb(99, 152, 126);
+}
+body.dark-mode .input{
+border-color: aquamarine;
+}
+
+body.dark-mode .form-check-input:checked {
+  background-color: teal !important;
+  border-color: teal !important;
+}
+
+.dark-mode .form-check-input {
+  background-color: darkgray;
+  border-color: darkgray;
+}
+
+
+.ml{
+  margin-left: 57px;
+  margin-top: 10px !important;
+}
 </style>

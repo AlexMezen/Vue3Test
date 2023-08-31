@@ -1,6 +1,8 @@
 <template>
   
       <nav-bar v-if="loggedIn" @logout="logout"></nav-bar>
+      <secondary-nav-bar v-if="loggedIn"  @logout="logout"></secondary-nav-bar>
+      
     <div class="app">
       <div class="scrollable-content">
       <transition name="page" mode="out-in">
@@ -18,6 +20,7 @@
 import NavBar from '@/components/NavBar.vue';
 import Login from '@/components/Login.vue';
 import ScrollToTopButton from "@/components/ScrollToTopButton.vue";
+import SecondaryNavBar from './components/SecondaryNavBar.vue';
 
 
 export default{
@@ -25,6 +28,7 @@ export default{
         NavBar,
         Login,
         ScrollToTopButton,
+        SecondaryNavBar,
     },
     data() {
     return {

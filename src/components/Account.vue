@@ -1,6 +1,5 @@
 <template>
   <div class="container mt-5">
-    <h1 class="mb-4">Account</h1>
     <form>
       <div class="row mb-3">
         <div class="col-3">
@@ -17,22 +16,22 @@
           </div>
           <div class="mb-3">
             <label for="age" class="form-label">Age</label>
-            <input type="number" class="form-control w-10" id="age" v-model="age" @change="saveChanges">
+            <post-input type="number" class="form-control w15 " placeholder="Age" id="age" v-model="age" @change="saveChanges"/>
           </div>
           <div class="mb-3">
             <label for="firstName" class="form-label">First Name</label>
-            <input type="text" class="form-control  w15" id="firstName" v-model="firstName" @change="saveChanges">
+            <post-input type="text" class="form-control  w15 " id="firstName" placeholder="Name" v-model="firstName" @change="saveChanges"/>
           </div>
           <div class ="mb-3">
             <label for ="lastName" class ="form-label">Last Name</label>
-            <input type ="text" class ="form-control  w15" id ="lastName" v-model ="lastName" @change ="saveChanges">
+            <post-input type ="text" class ="form-control  w15 " id ="lastName" placeholder="Surname" v-model ="lastName" @change ="saveChanges"/>
           </div>
         </div>
       </div>
 
       <div class ="mb-3">
-        <label for ="preferences" class ="form-label">Preferences</label>
-        <textarea class ="form-control" id ="preferences" rows ="3" v-model ="preferences" @change ="saveChanges"></textarea>
+        <label for ="preferences" class ="form-label ml1">Preferences</label>
+        <textarea class ="form-control ml1 " placeholder="Hobbies" id ="preferences" rows ="3" v-model ="preferences" @change ="saveChanges"></textarea>
       </div>
 
     </form>       
@@ -40,7 +39,11 @@
 </template>
 
 <script>
+import PostInput from './PostInput.vue';
 export default {
+  components:{
+PostInput,
+  },
   name: 'Account',
   data() {
     return {
@@ -100,14 +103,16 @@ export default {
 }
 .img-thumbnail {
   max-width: 250px;
+  object-fit: cover;
+
 }
 
 .btn-acc-file{
  background-color: teal;
  color: aliceblue;
  border: none;
- padding: 12px 20px;
- border-radius: 4px;
+ padding: 8px 13px;
+  border-radius: 4px;
  cursor: pointer;
  font-size: 16px;
  width: 133px;
@@ -125,7 +130,7 @@ export default {
   background-color: teal;
  color: aliceblue;
  border: none;
- padding: 12px 20px;
+ padding: 8px 13px;
  border-radius: 4px;
  cursor: pointer;
  font-size: 16px;
@@ -147,10 +152,22 @@ label[for= "photo"]{
 .mr{
  margin-right:15px;
 }
-.w-10{
- width:12%;
-}
 .w15{
-  width: 30%;
+  width: 30% !important;
+}
+.img-thumbnail {
+  max-width: 350px;
+  max-height: 400px;
+  margin-left: -85px;
+  margin-top: -40px;
+}
+.col-3 {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.ml1{
+margin-left: -80px;
+
 }
 </style>

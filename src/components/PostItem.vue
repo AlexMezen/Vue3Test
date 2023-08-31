@@ -78,12 +78,16 @@
 .pst-btns {
     display: flex;
     flex-wrap: nowrap;
+    padding: 8px 13px;
+    margin-right: -15px;
+    
     
 }
 .pst-btns .btn:first-of-type{
     margin-right: 15px;
     margin-left: 10px;
     width: 68px;
+    padding: 8px 13px;
 }
 .inpList{
   padding: 0px;
@@ -93,6 +97,7 @@
 .btn-save {
   background-color: teal; 
   color: aliceblue;
+  padding: 8px 13px;
 }
 
 

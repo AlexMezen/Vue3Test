@@ -1,6 +1,5 @@
 <template>
     <div>
-      <h1 class="pwp">Page with posts</h1>
       <div class="inpcl">
         <post-input v-focus v-model="searchQuery" placeholder="Search..." />
       </div>
@@ -72,22 +71,36 @@ export default {
     };
   },
   methods: {
+    
+
     createPost(post) {
       this.posts.push(post);
       this.dialogVisible = false;
-      localStorage.setItem("posts", JSON.stringify(this.posts));
+      localStorage.setItem(`post-${post.id}`, JSON.stringify(post));
     },
+
     removePost(post) {
       this.posts = this.posts.filter((p) => p.id !== post.id);
-      localStorage.setItem("posts", JSON.stringify(this.posts));
+
+      localStorage.removeItem(`post-${post.id}`);
     },
+
     editPost(editedPost) {
       const index = this.posts.findIndex((post) => post.id === editedPost.id);
       if (index !== -1) {
-        const updatedPosts = [...this.posts];
-        updatedPosts[index] = editedPost;
-        this.posts = updatedPosts;
-        localStorage.setItem("posts", JSON.stringify(this.posts));
+        this.posts[index] = editedPost;
+
+        localStorage.setItem(`post-${editedPost.id}`, JSON.stringify(editedPost));
+      }
+    },
+    loadPostsFromLocalStorage() {
+      // Iterate through localStorage and load stored posts
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key.startsWith("post")) {
+          const post = JSON.parse(localStorage.getItem(key));
+          this.posts.push(post);
+        }
       }
     },
 
@@ -112,7 +125,7 @@ export default {
           response.headers["x-total-count"] / this.limit
         );
         this.posts = [...this.posts, ...response.data];
-        this.removeDuplicatePosts();
+        // this.removeDuplicatePosts();
         this.postsLoading = false;
       } catch (e) {
         this.hasError = true;
@@ -135,22 +148,22 @@ export default {
           response.headers["x-total-count"] / this.limit
         );
         this.posts = [...this.posts, ...response.data];
-        this.removeDuplicatePosts();
+        // this.removeDuplicatePosts();
       } catch (e) {
         alert("Error");
       }
     },
-    removeDuplicatePosts() {
-      const uniqueTitles = new Set();
-      const uniquePosts = [];
-      for (const post of this.posts) {
-        if (!uniqueTitles.has(post.title)) {
-          uniqueTitles.add(post.title);
-          uniquePosts.push(post);
-        }
-      }
-      this.posts = uniquePosts;
-    },
+    // removeDuplicatePosts() {
+    //   const uniqueTitles = new Set();
+    //   const uniquePosts = [];
+    //   for (const post of this.posts) {
+    //     if (!uniqueTitles.has(post.title)) {
+    //       uniqueTitles.add(post.title);
+    //       uniquePosts.push(post);
+    //     }
+    //   }
+    //   this.posts = uniquePosts;
+    // },
   },
   mounted() {
     if (localStorage.getItem("posts")) {
@@ -181,6 +194,9 @@ export default {
       );
     },
   },
+  created() {
+    this.loadPostsFromLocalStorage();
+  },
 };
   </script>
   <style>
@@ -194,7 +210,7 @@ export default {
     display: flex;
     flex-direction: row-reverse;
     align-items: flex-end;
-    margin-right: 20px;
+    margin-right: 17px;
     
   }
   .pwp {

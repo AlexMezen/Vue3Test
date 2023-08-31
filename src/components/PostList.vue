@@ -38,6 +38,7 @@ components:{PostItem},
 .pl{
     display: inline;
     margin-left: 15px;
+    font-size: large;
 }
 .ple{
     display: flex;
