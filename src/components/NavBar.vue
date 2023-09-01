@@ -127,7 +127,9 @@ body.dark-mode .nav{
 body.dark-mode .input{
 border-color: aquamarine;
 }
-
+body.dark-mode .close-bar2  {
+  background-color: rgb(146, 151, 156);
+}
 body.dark-mode .form-check-input:checked {
   background-color: teal !important;
   border-color: teal !important;

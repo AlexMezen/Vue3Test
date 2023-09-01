@@ -2,7 +2,7 @@
   <template>
   <div>
     <h3 class="aboutPage">This is a test website where there is an opportunity to interact with posts. It is built on Vue 3. 
-      Additionally, there is a separate identical page with posts written using Vuex. As the page is scrolled to the end, new posts are automatically loaded.
+      Additionally,the page with posts written using Vuex. As the page is scrolled to the end, new posts are automatically loaded.
       When the page fetches new data, a loading bar appears to indicate that the data is gradually appearing.If there is an issue while loading data, we will see an error message.
       Axios is also utilized for requesting posts. Posts created and edited are saved on the page after reloading. Account data is also saved without the need for buttons.
        An account page has been created where you can modify information, including photos. 
