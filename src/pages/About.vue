@@ -10,7 +10,7 @@
        The website supports both light and dark themes.
        For convenience, a button has been added to allow users to smoothly scroll back to the top.</h3>
 <p class="aboutInteractive">
-  Interactive elements on the website:
+  <a href="https://music.youtube.com/playlist?list=PLj13wtX7R7lZaBV9Q3rfJl4WHPUu03xYx" class="none-style" target="_blank">Interactive</a> elements on the website:
 </p>
 <p class="aboutInteractive">
 <span class="aboutNumSpan">1.</span>  Search: At the top of the page, there is a search field where users can input a keyword, and the application will display all posts whose titles contain that keyword.
@@ -67,5 +67,10 @@ font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 .aboutBtn{
   margin-left: 25px;
   margin-top: 10px;
+}
+.none-style{
+color: black;
+text-decoration: none;
+cursor:text ;
 }
 </style>

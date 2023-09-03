@@ -54,8 +54,6 @@ methods:{
   outline: 0;
   box-shadow: 0 0 0 0.2rem  rgb(131, 202, 168);
 }
-.formSelect option:hover {
-  background:  black;
-}
+
 
 </style>

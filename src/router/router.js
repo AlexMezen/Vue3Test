@@ -12,12 +12,12 @@ const routes = [
     {
       path: '/',
       component: Main,
-      meta: { requiresAuth: true }, // Добавьте это свойство
+      meta: { requiresAuth: true }, 
     },
     {
       path: '/about',
       component: About,
-      meta: { requiresAuth: true }, // Или это свойство
+      meta: { requiresAuth: true }, 
     },
     {
       path: '/account',

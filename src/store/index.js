@@ -41,9 +41,7 @@ export const store = new Vuex.Store({
         }
       }
     },
-    showDialog(state){
-      state.dialogVisible = true;
-    },
+    
     async fetchPosts(state) {
       try {
         state.hasError = false;

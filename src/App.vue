@@ -1,6 +1,6 @@
 <template>
   
-      <nav-bar v-if="loggedIn" @logout="logout"></nav-bar>
+      <nav-bar v-if="loggedIn"></nav-bar>
       <secondary-nav-bar v-if="loggedIn"  @logout="logout"></secondary-nav-bar>
       
     <div class="app">
@@ -16,39 +16,35 @@
   </template>
   
 
-<script>
-import NavBar from '@/components/NavBar.vue';
-import Login from '@/components/Login.vue';
-import ScrollToTopButton from "@/components/ScrollToTopButton.vue";
-import SecondaryNavBar from './components/SecondaryNavBar.vue';
-
-
-export default{
-    components:{
-        NavBar,
-        Login,
-        ScrollToTopButton,
-        SecondaryNavBar,
+  <script>
+  import NavBar from '@/components/NavBar.vue';
+  import Login from '@/components/Login.vue';
+  import ScrollToTopButton from "@/components/ScrollToTopButton.vue";
+  import SecondaryNavBar from './components/SecondaryNavBar.vue';
+  
+  export default {
+    components: {
+      NavBar,
+      Login,
+      ScrollToTopButton,
+      SecondaryNavBar,
     },
     data() {
-    return {
-      loggedIn: false,
-    };
-  },
-  methods: {
-    login() {
-      this.loggedIn = true;
+      return {
+        loggedIn: false,
+      };
     },
-    logout() {
-      this.loggedIn = false;
-      this.$router.push("/login");
+    methods: {
+      login() {
+        this.loggedIn = true;
+      },
+      logout() {
+        this.loggedIn = false;
+      },
     },
-  },
-
-}
-
-</script>
-
+  };
+  </script>
+  
 <style>
 *{
     box-sizing: border-box;

@@ -25,7 +25,9 @@ export default {
   left: 0;
   background: rgba(0, 0, 0, 0.5);
   position: fixed;
-  display: flex;
+  display: flex;  
+  z-index: 2;
+
 }
 .dialog-post-cont {
   margin: auto;
@@ -42,6 +44,7 @@ export default {
   position: absolute;
   top: 10px;
   right: 10px;
+  z-index: 4;
 }
 .close-icon:hover .close-bar1 {
     transform: rotate(45deg);

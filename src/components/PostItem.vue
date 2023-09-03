@@ -62,10 +62,6 @@
     .btn-del{
       margin-right: 15px;
     }
-    /* .checked::after {
-      content: "\2713"; 
-      margin-right: 1px;      
-    } */
   .post {
   display: flex;
   justify-content: space-between;
@@ -73,6 +69,7 @@
   padding: 15px;
   margin: 15px;
   border: 2px solid rgb(0, 92, 128);
+  z-index: 1;
 }
 
 .pst-btns {

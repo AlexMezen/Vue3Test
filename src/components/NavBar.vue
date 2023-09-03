@@ -106,7 +106,10 @@ color: #a7a7a7;
 }
 body.dark-mode select{
   background-color: #555454;
-  color: aquamarine;
+  color: white;
+}
+body.dark-mode .formSelect option{
+  color: white;
 }
 body.dark-mode .img-thumbnail{
   background: #333;
@@ -134,7 +137,9 @@ body.dark-mode .form-check-input:checked {
   background-color: teal !important;
   border-color: teal !important;
 }
-
+body.dark-mode .none-style{
+  color: white;
+}
 .dark-mode .form-check-input {
   background-color: darkgray;
   border-color: darkgray;
