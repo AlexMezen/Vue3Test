@@ -55,7 +55,7 @@ PostInput,
     };
   },
   mounted() {
-    this.firstName = localStorage.getItem('firstName') || '';
+    this.firstName = localStorage.getItem('username') || '';
     this.lastName = localStorage.getItem('lastName') || '';
     this.age = localStorage.getItem('age') || '';
     this.preferences = localStorage.getItem('preferences') || '';
@@ -81,17 +81,17 @@ PostInput,
       localStorage.removeItem('photo');
     },
     saveChanges() {
-      localStorage.setItem('firstName', this.firstName);
-      localStorage.setItem('lastName', this.lastName);
-      localStorage.setItem('age', this.age);
-      localStorage.setItem('preferences', this.preferences);
+    localStorage.setItem('username', this.firstName);
+    localStorage.setItem('lastName', this.lastName);
+    localStorage.setItem('age', this.age);
+    localStorage.setItem('preferences', this.preferences);
 
-      if (this.photo) {
-        localStorage.setItem('photo', this.photo);
-      } else {
-        localStorage.removeItem('photo');
-      }
-    },
+    if (this.photo) {
+      localStorage.setItem('photo', this.photo);
+    } else {
+      localStorage.removeItem('photo');
+    }
+  },
   },
 };
 </script>
