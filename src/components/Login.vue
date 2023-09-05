@@ -11,7 +11,6 @@
       <post-button class="mtb mr widthLoginBtn" type="submit">{{ loginButtonLabel }}</post-button>
     </form>
     <form class="loginRegister" @submit.prevent="register" v-show="showRegisterForm">
-      <h3 class="register"></h3>
       <post-input v-model="registerUsername" type="text" id="register-username" required placeholder="Username" />
       <br>
       <post-input v-model="registerPassword" type="password" id="register-password" placeholder="Password" required />
@@ -77,7 +76,7 @@ export default {
         // Clear the error message after a short delay (e.g., 2 seconds)
         setTimeout(() => {
           this.loginError = false;
-        }, 3000);
+        }, 2000);
       }
     },
     register() {
@@ -184,7 +183,7 @@ export default {
   margin-left: 260px;
 }
 .widthLoginBtn{
-  width: 80px;
+  width: 79.5px;
 }
 .dspNone{
 display: none;
