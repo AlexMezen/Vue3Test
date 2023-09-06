@@ -4,8 +4,19 @@
     <form @submit.prevent="login" v-show="!showRegisterForm">
       <post-input v-focus v-model="username" type="text" id="username" required placeholder="Username" />
       <br>
-      <post-input v-model="password" type="password" id="password" placeholder="Password" :class="{ 'incorrect': loginError }"  required />
-      <p v-show="loginError" class="registered-message-error">Invalid credentials</p>
+      <div class="password-input-container">
+  <post-input
+    v-model="password"
+    :type="showPassword ? 'text' : 'password'"
+    id="password"
+    placeholder="Password"
+    :class="{ 'incorrect': loginError }"
+    required
+  />
+  <span class="password-toggle" @click="togglePasswordVisibility">{{ showPassword ? '👁️' : '👁️‍🗨️' }}</span>
+</div>
+
+<p v-show="loginError" class="registered-message-error">Invalid credentials</p>
 
       <br>
       <post-button class="mtb mr widthLoginBtn" type="submit">{{ loginButtonLabel }}</post-button>
@@ -13,7 +24,17 @@
     <form class="loginRegister" @submit.prevent="register" v-show="showRegisterForm">
       <post-input v-model="registerUsername" type="text" id="register-username" required placeholder="Username" />
       <br>
-      <post-input v-model="registerPassword" type="password" id="register-password" placeholder="Password" required />
+      <div class="password-input-container">
+  <post-input
+    v-model="registerPassword"
+    :type="showRegisterPassword ? 'text' : 'password'"
+    id="register-password"
+    placeholder="Password"
+    required
+    :class="{ 'incorrect': loginError }"
+  />
+  <span class="password-toggle" @click="toggleRegisterPasswordVisibility">{{ showRegisterPassword ? '👁️' : '👁️‍🗨️' }}</span>
+</div>
       <br>
       <post-button class="mtb mr with-margin" type="submit">Sign up</post-button>
     </form>
@@ -43,6 +64,8 @@ export default {
   },
   data() {
     return {
+      showPassword: false,
+      showRegisterPassword: false,
       username: "",
       password: "",
       registerUsername: "",
@@ -79,6 +102,12 @@ export default {
         }, 2000);
       }
     },
+    togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  },
+  toggleRegisterPasswordVisibility() {
+    this.showRegisterPassword = !this.showRegisterPassword;
+  },
     register() {
       const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
       registeredUsers.push({ username: this.registerUsername, password: this.registerPassword });
@@ -188,8 +217,40 @@ export default {
 .dspNone{
 display: none;
 }
-.incorrect {
-  
+.password-input-container {
+  position: relative;
+  display: inline-block;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  user-select: none;
+}
+.register-password {
+  width: 100%;
+  padding-right: 40px; /* Добавляем правый отступ для размещения кнопки "глаза" */
+  margin-bottom: 10px; /* Отступ между инпутами */
+}
+
+/* Стили для кнопки "глаза" в инпуте регистрации */
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  user-select: none;
+  font-size: 20px; /* Размер иконки "глаза" */
+  color: #888; /* Цвет по умолчанию */
+}
+
+/* Стили для кнопки "глаза" в инпуте регистрации при наведении курсора */
+.password-toggle:hover {
+  color: #333; /* Изменяем цвет при наведении */
 }
 .registered-message-error{
   color: red;
