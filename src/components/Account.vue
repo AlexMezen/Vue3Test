@@ -28,7 +28,29 @@
           </div>
         </div>
       </div>
-
+      <div v-if="lastRegisteredUser" class="mb-3">
+        <label for="lastUsername" class="form-label">Username</label>
+        <post-input
+          type="text"
+          class="form-control w15"
+          id="lastUsername"
+          v-model="lastRegisteredUser.username"
+          @change="saveChanges"
+        />
+      </div>
+      <div v-if="lastRegisteredUser" class="mb-3">
+        <label for="lastPassword" class="form-label">Password</label>
+        <post-input
+          type="text"
+          class="form-control w15"
+          id="lastPassword"
+          v-model="lastRegisteredUser.password"
+          @change="saveChanges"
+        />
+      </div>
+      <div v-if="lastRegisteredUser" class="mb-3">
+        <button  class ="btn btn-danger mt-2 btn-acc mr" @click="deleteLastUser">Delete User</button>
+      </div>
       <div class ="mb-3">
         <label for ="preferences" class ="form-label ml1">Preferences</label>
         <textarea class ="form-control ml1 " placeholder="Hobbies" id ="preferences" rows ="3" v-model ="preferences" @change ="saveChanges"></textarea>
@@ -52,7 +74,16 @@ PostInput,
       age: '',
       preferences: '',
       photo: null,
+      registeredUsers: [],
+      
+
     };
+  },
+  computed: {
+    // Compute the last registered user
+    lastRegisteredUser() {
+      return this.registeredUsers.length > 0 ? this.registeredUsers[this.registeredUsers.length - 1] : null;
+    },
   },
   mounted() {
     this.firstName = localStorage.getItem('username') || '';
@@ -60,8 +91,20 @@ PostInput,
     this.age = localStorage.getItem('age') || '';
     this.preferences = localStorage.getItem('preferences') || '';
     this.photo = localStorage.getItem('photo') || null;
+
+    // Load registeredUsers
+    const storedUsers = localStorage.getItem('registeredUsers');
+    if (storedUsers) {
+      this.registeredUsers = JSON.parse(storedUsers);
+    }
   },
   methods: {
+    deleteLastUser() {
+      if (this.registeredUsers.length > 0) {
+        this.registeredUsers.pop(); // Remove the last user
+        this.saveChanges();
+      }
+    },
     onFileChange(e) {
     const file = e.target.files[0];
     if (file) {
@@ -85,6 +128,8 @@ PostInput,
     localStorage.setItem('lastName', this.lastName);
     localStorage.setItem('age', this.age);
     localStorage.setItem('preferences', this.preferences);
+    localStorage.setItem('registeredUsers', JSON.stringify(this.registeredUsers));
+
 
     if (this.photo) {
       localStorage.setItem('photo', this.photo);
@@ -92,6 +137,10 @@ PostInput,
       localStorage.removeItem('photo');
     }
   },
+  deleteUser(index) {
+  this.registeredUsers.splice(index, 1);
+  this.saveChanges();
+},
   },
 };
 </script>
