@@ -91,14 +91,11 @@ export default {
     const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
     const user = registeredUsers.find(user => user.username === this.username && user.password === this.password);
     if (user) {
-      // Сохраните текущего пользователя в localStorage
       localStorage.setItem('currentUser', JSON.stringify(user));
       this.$emit("login");
       this.$router.push("/");
       } else {
-        // Set loginError to true to display the error message
         this.loginError = true;
-        // Clear the error message after a short delay (e.g., 2 seconds)
         setTimeout(() => {
           this.loginError = false;
         }, 2000);
@@ -118,13 +115,12 @@ export default {
       setTimeout(() => {
         this.registered = false;
         this.showRegisterForm = false;
-      }, 2000); // Hide the message and form after 2 seconds
+      }, 2000); 
     },
     toggleRegisterForm() {
       this.showRegisterForm = !this.showRegisterForm;
     },
     googleLoginCallback(googleUser) {
-      // Existing Google login callback method
       this.$emit("login");
       this.$router.push("/");
     },

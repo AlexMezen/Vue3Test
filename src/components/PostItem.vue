@@ -13,7 +13,6 @@
         <div class="pst-btns">
         <post-button :class="{ 'btn-edit': !editing, 'btn-save': editing }" @click="toggleEditMode">{{ editing ? 'Save' : 'Edit' }}</post-button>
         <post-button class="btn-del" @click="$emit('remove')">Delete</post-button>
-        <!-- <post-button @click="toggleCheckmark" :class="{ 'checked': isChecked }">Done</post-button> -->
       </div>
     </div>
   </template>

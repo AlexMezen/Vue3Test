@@ -2,63 +2,82 @@
   <div class="container mt-5">
     <form>
       <div class="row mb-3">
+        
         <div class="col-3">
+          
           <div class="mb-3">
             <img v-if="photo" :src="photo" class="img-thumbnail mr">
           </div>
         </div>
+        
         <div class="col-9">
+       
           <div class="mb-3">
             <input type="file" class="form-control d-none mr" id="photo" @change="onFileChange">
             <label for="photo" class="btn btn-primary mr btn-acc-file">Choose File</label>
             <br/>
             <button v-if="photo" type ="button" class ="btn btn-danger mt-2 btn-acc mr" @click="deletePhoto">Delete Photo</button>                
           </div>
-          <div class="mb-3">
-            <label for="age" class="form-label">Age</label>
-            <post-input type="number" class="form-control w15 " placeholder="Age" id="age" v-model="age" @change="saveChanges"/>
+          <div class="row mb-3">
+            <div class="col-6">
+              <div class="mb-3">
+                <label for="firstName" class="form-label">First Name</label>
+                <post-input type="text" class="form-control w15" id="firstName" placeholder="Name" v-model="firstName" @change="saveChanges"/>
+              </div>
+              <div v-if="lastRegisteredUser" class="mb-3">
+                <label for="lastUsername" class="form-label">Username</label>
+                <post-input
+                  type="text"
+                  class="form-control w15"
+                  id="lastUsername"
+                  v-model="currentUsername"
+                  @change="saveChanges"
+                />
+              </div>
+            </div>
+            <div class ="col-6">
+              <div class ="mb-3">
+                <label for ="lastName" class ="form-label">Last Name</label>
+                <post-input type ="text" class ="form-control w15" id ="lastName" placeholder="Surname" v-model ="lastName" @change ="saveChanges"/>
+              </div>
+              <div v-if="lastRegisteredUser" class="mb-3">
+                <label for="lastPassword" class="form-label">Password</label>
+                <post-input
+                  type="text"
+                  class="form-control w15"
+                  id="lastPassword"
+                  v-model="currentPassword"
+                  @change="saveChanges"
+                />
+              </div>
+            </div>
           </div>
-          <div class="mb-3">
-            <label for="firstName" class="form-label">First Name</label>
-            <post-input type="text" class="form-control  w15 " id="firstName" placeholder="Name" v-model="firstName" @change="saveChanges"/>
-          </div>
-          <div class ="mb-3">
-            <label for ="lastName" class ="form-label">Last Name</label>
-            <post-input type ="text" class ="form-control  w15 " id ="lastName" placeholder="Surname" v-model ="lastName" @change ="saveChanges"/>
-          </div>
+          <div class ="row mb-3">
+            <div class ="col-6">
+              <div class ="mb-3">
+                <label for ="age" class ="form-label">Age</label>
+                <post-input type ="number" class ="form-control w10" placeholder ="Age" id ="age" v-model ="age" @change ="saveChanges"/>
+              </div>              
+            </div>
+            <div v-if = "lastRegisteredUser" class = "col-6 d-flex align-items-end mb-3">
+              <button  class = "btn btn-danger btn-acc " @click = "deleteLastUser">Delete User</button>              
+            </div>            
+          </div>        
+            
         </div>
       </div>
-      <div v-if="lastRegisteredUser" class="mb-3">
-        <label for="lastUsername" class="form-label">Username</label>
-        <post-input
-          type="text"
-          class="form-control w15"
-          id="lastUsername"
-          v-model="currentUsername"
-          @change="saveChanges"
-        />
-      </div>
-      <div v-if="lastRegisteredUser" class="mb-3">
-        <label for="lastPassword" class="form-label">Password</label>
-        <post-input
-          type="text"
-          class="form-control w15"
-          id="lastPassword"
-          v-model="currentPassword"
-          @change="saveChanges"
-        />
-      </div>
-      <div v-if="lastRegisteredUser" class="mb-3">
-        <button  class ="btn btn-danger mt-2 btn-acc mr" @click="deleteLastUser">Delete User</button>
-      </div>
+
+    
+
       <div class ="mb-3">
         <label for ="preferences" class ="form-label ml1">Preferences</label>
-        <textarea class ="form-control ml1 " placeholder="Hobbies" id ="preferences" rows ="3" v-model ="preferences" @change ="saveChanges"></textarea>
+        <textarea class ="form-control ml1 " placeholder ="Hobbies" id ="preferences" rows ="3" v-model ="preferences" @change ="saveChanges"></textarea>
       </div>
 
     </form>       
   </div>
 </template>
+
 
 <script>
 import PostInput from './PostInput.vue';
@@ -82,7 +101,6 @@ PostInput,
     };
   },
   computed: {
-    // Compute the last registered user
     lastRegisteredUser() {
       return this.registeredUsers.length > 0 ? this.registeredUsers[this.registeredUsers.length - 1] : null;
     },
@@ -95,26 +113,23 @@ PostInput,
   this.preferences = localStorage.getItem('preferences') || '';
   this.photo = localStorage.getItem('photo') || null;
 
-  // Загрузите зарегистрированных пользователей
   const storedUsers = localStorage.getItem('registeredUsers');
   if (storedUsers) {
     this.registeredUsers = JSON.parse(storedUsers);
   }
 
-  // Получите текущего пользователя из localStorage и установите его данные
   const currentUser = localStorage.getItem('currentUser');
   if (currentUser) {
     const user = JSON.parse(currentUser);
     this.currentUsername = user.username;
 this.currentPassword = user.password;
     
-    // Вам также может потребоваться установить другие поля, если они есть, например, пароль.
   }
 },
   methods: {
     deleteLastUser() {
       if (this.registeredUsers.length > 0) {
-        this.registeredUsers.pop(); // Remove the last user
+        this.registeredUsers.pop(); 
         this.saveChanges();
       }
     },
@@ -149,7 +164,6 @@ this.currentPassword = user.password;
       user.password = this.currentPassword;
       localStorage.setItem('currentUser', JSON.stringify(user));
 
-      // Найдите текущего пользователя в массиве registeredUsers и обновите его данные
       const currentUserIndex = this.registeredUsers.findIndex(
         (user) => user.username === this.currentUsername
       );
@@ -159,7 +173,6 @@ this.currentPassword = user.password;
           password: this.currentPassword
         };
       } else {
-        // Если текущий пользователь не найден в registeredUsers, добавьте его
         this.registeredUsers.push({
           username: this.currentUsername,
           password: this.currentPassword
@@ -167,9 +180,8 @@ this.currentPassword = user.password;
       }
     }
 
-    // ...
+    
 
-    // Сохраните измененный массив registeredUsers в localStorage
     localStorage.setItem('registeredUsers', JSON.stringify(this.registeredUsers));
 
     if (this.photo) {
@@ -243,7 +255,7 @@ label[for= "photo"]{
  margin-right:15px;
 }
 .w15{
-  width: 30% !important;
+  width: 50% !important;
 }
 .img-thumbnail {
   max-width: 350px;
@@ -259,5 +271,11 @@ label[for= "photo"]{
 .ml1{
 margin-left: -80px;
 
+}
+.w10{
+width: 50% !important;
+}
+.mlDeleteUser{
+  margin-left: -110px;
 }
 </style>
