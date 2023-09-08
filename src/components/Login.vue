@@ -88,11 +88,13 @@ export default {
   },
   methods: {
     login() {
-      const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
-      const user = registeredUsers.find(user => user.username === this.username && user.password === this.password);
-      if (user) {
-        this.$emit("login");
-        this.$router.push("/");
+    const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
+    const user = registeredUsers.find(user => user.username === this.username && user.password === this.password);
+    if (user) {
+      // Сохраните текущего пользователя в localStorage
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      this.$emit("login");
+      this.$router.push("/");
       } else {
         // Set loginError to true to display the error message
         this.loginError = true;

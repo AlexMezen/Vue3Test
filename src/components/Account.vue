@@ -34,7 +34,7 @@
           type="text"
           class="form-control w15"
           id="lastUsername"
-          v-model="lastRegisteredUser.username"
+          v-model="currentUsername"
           @change="saveChanges"
         />
       </div>
@@ -44,7 +44,7 @@
           type="text"
           class="form-control w15"
           id="lastPassword"
-          v-model="lastRegisteredUser.password"
+          v-model="currentPassword"
           @change="saveChanges"
         />
       </div>
@@ -75,7 +75,9 @@ PostInput,
       preferences: '',
       photo: null,
       registeredUsers: [],
-      
+      currentPassword: '',
+      currentUsername: '', 
+
 
     };
   },
@@ -85,19 +87,30 @@ PostInput,
       return this.registeredUsers.length > 0 ? this.registeredUsers[this.registeredUsers.length - 1] : null;
     },
   },
+  
   mounted() {
-    this.firstName = localStorage.getItem('username') || '';
-    this.lastName = localStorage.getItem('lastName') || '';
-    this.age = localStorage.getItem('age') || '';
-    this.preferences = localStorage.getItem('preferences') || '';
-    this.photo = localStorage.getItem('photo') || null;
+  this.firstName = localStorage.getItem('firstName') || '';
+  this.lastName = localStorage.getItem('lastName') || '';
+  this.age = localStorage.getItem('age') || '';
+  this.preferences = localStorage.getItem('preferences') || '';
+  this.photo = localStorage.getItem('photo') || null;
 
-    // Load registeredUsers
-    const storedUsers = localStorage.getItem('registeredUsers');
-    if (storedUsers) {
-      this.registeredUsers = JSON.parse(storedUsers);
-    }
-  },
+  // Загрузите зарегистрированных пользователей
+  const storedUsers = localStorage.getItem('registeredUsers');
+  if (storedUsers) {
+    this.registeredUsers = JSON.parse(storedUsers);
+  }
+
+  // Получите текущего пользователя из localStorage и установите его данные
+  const currentUser = localStorage.getItem('currentUser');
+  if (currentUser) {
+    const user = JSON.parse(currentUser);
+    this.currentUsername = user.username;
+this.currentPassword = user.password;
+    
+    // Вам также может потребоваться установить другие поля, если они есть, например, пароль.
+  }
+},
   methods: {
     deleteLastUser() {
       if (this.registeredUsers.length > 0) {
@@ -124,12 +137,40 @@ PostInput,
       localStorage.removeItem('photo');
     },
     saveChanges() {
-    localStorage.setItem('username', this.firstName);
+    localStorage.setItem('firstName', this.firstName);
     localStorage.setItem('lastName', this.lastName);
     localStorage.setItem('age', this.age);
     localStorage.setItem('preferences', this.preferences);
     localStorage.setItem('registeredUsers', JSON.stringify(this.registeredUsers));
+    const currentUser = localStorage.getItem('currentUser');
+    if (currentUser) {
+      const user = JSON.parse(currentUser);
+      user.username = this.currentUsername;
+      user.password = this.currentPassword;
+      localStorage.setItem('currentUser', JSON.stringify(user));
 
+      // Найдите текущего пользователя в массиве registeredUsers и обновите его данные
+      const currentUserIndex = this.registeredUsers.findIndex(
+        (user) => user.username === this.currentUsername
+      );
+      if (currentUserIndex !== -1) {
+        this.registeredUsers[currentUserIndex] = {
+          username: this.currentUsername,
+          password: this.currentPassword
+        };
+      } else {
+        // Если текущий пользователь не найден в registeredUsers, добавьте его
+        this.registeredUsers.push({
+          username: this.currentUsername,
+          password: this.currentPassword
+        });
+      }
+    }
+
+    // ...
+
+    // Сохраните измененный массив registeredUsers в localStorage
+    localStorage.setItem('registeredUsers', JSON.stringify(this.registeredUsers));
 
     if (this.photo) {
       localStorage.setItem('photo', this.photo);
